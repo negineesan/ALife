@@ -1,0 +1,1 @@
+G:\VSCode_src\c++\alife\alife\x64\Release\alife.vcxproj.AssemblyReference.cache
