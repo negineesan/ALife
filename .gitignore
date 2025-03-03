@@ -4,3 +4,7 @@ alife.lib
 alife.pdb
 alife/x64/Release/
 x64/
+Plugins/
+Scenes/
+Settings/
+TutorialInfo/
