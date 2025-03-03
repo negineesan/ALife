@@ -41,7 +41,7 @@ float smoothDamp(float current, float target, float& currentVelocity, float smoo
 
 extern "C" {
     ALIFE_API void* createAlife(float x, float y);
-    ALIFE_API void updateAlife(void* alife, float foodX, float foodY, float deltaTime);
+    ALIFE_API void updateAlife(void* alife, float foodX, float foodY);
     ALIFE_API void destroyAlife(void* alife);
     ALIFE_API void debugLog(const char* message);
 }
@@ -62,13 +62,14 @@ public:
         // 初期化処理
     }
 
-    void update(float foodX, float foodY, float deltaTime) {
+    void update(float foodX, float foodY) {
         // 目標位置を餌の位置に設定（徐々に追いかける）
         targetX = foodX;
         targetY = foodY;
         
         // 計算の安全対策：極端に大きなdeltaTimeを制限
-        float clampedDeltaTime = std::min(deltaTime, 0.1f);
+        //float clampedDeltaTime = std::min(deltaTime, 0.1f);
+        float clampedDeltaTime = 0.1f; // 仮の値
         
         // 現在位置と目標位置の差を計算
         float dx = targetX - x;
@@ -110,7 +111,7 @@ public:
         std::stringstream ss;
         ss << "Alife updated: x=" << x << ", y=" << y << ", targetX=" << targetX << ", targetY=" << targetY
            << ", radius=" << radius << ", life=" << life 
-           << ", vx=" << vx << ", vy=" << vy << ", deltaTime=" << deltaTime
+           << ", vx=" << vx << ", vy=" << vy << ", deltaTime=" << clampedDeltaTime // 仮の値
            << ", dist=" << dist;
         debugLog(ss.str().c_str());
     }
@@ -159,9 +160,9 @@ extern "C" {
         return alife;
     }
 
-    ALIFE_API void updateAlife(void* alife, float foodX, float foodY, float deltaTime) {
+    ALIFE_API void updateAlife(void* alife, float foodX, float foodY) {
         if (alife != nullptr) {
-            static_cast<Alife*>(alife)->update(foodX, foodY, deltaTime);
+            static_cast<Alife*>(alife)->update(foodX, foodY);
         }
     }
 
@@ -190,14 +191,8 @@ extern "C" {
         return static_cast<Alife*>(alife)->vy;
     }
 
-    ALIFE_API void debugLog(const char* message) {
-        std::ofstream logFile("G:/VSCode_src/c++/alife/ALife_log.txt", std::ios::app);
-        if (logFile.is_open()) {
-            logFile << "debugLog called: " << message << std::endl;
-            logFile.close();
-        } else {
-            std::cerr << "Failed to open log file: G:/VSCode_src/c++/alife/ALife_log.txt" << std::endl;
-        }
+     ALIFE_API void debugLog(const char* message) {
+        OutputDebugStringA(message);
     }
 
     ALIFE_API bool isDead(void* alife) {

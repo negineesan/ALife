@@ -9,7 +9,7 @@ public class AlifeManager : MonoBehaviour
     private static extern IntPtr createAlife(float x, float y);
 
     [DllImport("alife", CallingConvention = CallingConvention.Cdecl)]
-    private static extern void updateAlife(IntPtr alife, float foodX, float foodY, float deltaTime);
+    private static extern void updateAlife(IntPtr alife, float foodX, float foodY);
 
     [DllImport("alife", CallingConvention = CallingConvention.Cdecl)]
     private static extern void destroyAlife(IntPtr alife);
@@ -83,7 +83,7 @@ public class AlifeManager : MonoBehaviour
 
                 Debug.Log("foodX: " + foodX + ", foodY: " + foodY + ", deltaTime: " + Time.deltaTime + ", alife.x: " + getAlifeX(alife) + ", alife.y: " + getAlifeY(alife)); // 変更
 
-                updateAlife(alife, foodX, foodY, Time.deltaTime);
+                updateAlife(alife, foodX, foodY);
 
                 // Update the position and scale of the sphere
                 alifeObject.transform.position = new Vector3(getAlifeX(alife), 0, getAlifeY(alife));
