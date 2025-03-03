@@ -1,0 +1,1 @@
+G:\Unity\Project\ALife\Assets\alife\x64\Release\alife.vcxproj.AssemblyReference.cache
