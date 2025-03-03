@@ -1,1 +1,6 @@
 alife/x64/Release/.NETFrameworkVersion=v4.7.2.AssemblyAttributes.obj
+alife.dll
+alife.lib
+alife.pdb
+alife/x64/Release/
+x64/
